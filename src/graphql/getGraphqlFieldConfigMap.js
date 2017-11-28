@@ -15,7 +15,7 @@ function getGraphqlFieldConfigMap(g, iri) {
   walkmap(g, iri, rdfsSubClassOf)
   // Everything is a Resource, plus many universal properties
   // like label and comment, have rdfs:Resource in their domain
-  .add(rdfsResource)
+  // .add(rdfsResource)
   // For each class, find properties on their domain
   .forEach(classIri => g[classIri][_rdfsDomain] &&
     // For each property, add the property to the list and find its subProperties and their subProperties
