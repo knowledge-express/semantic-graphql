@@ -9,6 +9,7 @@ const getGraphqlDescription = require('./getGraphqlDescription');
 const getGraphqlObjectType = require('./getGraphqlObjectType');
 const getGraphqlScalarType = require('./getGraphqlScalarType');
 const getGraphqlPolymorphicScalarType = require('./getGraphqlPolymorphicScalarType');
+const getGraphqlInterfaceType = require('./getGraphqlInterfaceType');
 const getGraphqlPolymorphicObjectType = require('./getGraphqlPolymorphicObjectType');
 const getGraphqlScalarResolver = require('./getGraphqlScalarResolver');
 const getGraphqlObjectResolver = require('./getGraphqlObjectResolver');
@@ -39,7 +40,7 @@ function getGraphqlFieldConfig(g, iri) {
   }
   else {
     fieldConfig.resolve = getGraphqlObjectResolver(g, iri, ranges);
-    fieldConfig.type = nRanges === 1 ? getGraphqlObjectType(g, ranges[0]) : getGraphqlPolymorphicObjectType(g, ranges);
+    fieldConfig.type = nRanges === 1 ? getGraphqlInterfaceType(g, ranges[0]) : getGraphqlPolymorphicObjectType(g, ranges);
   }
 
   if (isGraphqlList(g, iri)) fieldConfig.type = new GraphQLList(fieldConfig.type);
