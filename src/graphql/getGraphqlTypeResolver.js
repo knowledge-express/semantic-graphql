@@ -12,8 +12,15 @@ function getGraphqlTypeResolver(g, iri) {
 
   return (source, info) => Promise.resolve(g.resolvers.resolveSourceTypes(source, info))
   .then(types => {
-    // Everything is a rdfs:Resource, hence the fallback
-    if (isNil(types)) return getGraphqlObjectType(g, rdfsResource);
+    const leastRestriveType = iri;
+
+    if (g.config.allowUntypedResults) {
+      types = isNil(types) ? [ leastRestriveType ] : [].concat(leastRestriveType, types);
+    } else {
+      // Everything is a rdfs:Resource, hence the fallback
+      if (isNil(types)) return getGraphqlObjectType(g, rdfsResource);
+    }
+
 
     const typesArray = castArrayShape(types);
 
