@@ -62,7 +62,7 @@ function getGraphqlObjectResolver(g, iri, ranges) {
 
       return Promise.all(promises)
       .then(results => {
-        const finalResult = results.reduce((a, b) => a.concat(b), []);
+        const finalResult = results.reduce((a, b) => b != null ? a.concat(b) : a, []);
 
         return isList ? finalResult : finalResult[0];
       });
