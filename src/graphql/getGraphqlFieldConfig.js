@@ -32,14 +32,14 @@ function getGraphqlFieldConfig(g, iri) {
   };
 
   if (ranges.every(isLiteral)) {
-    fieldConfig.resolve = getGraphqlScalarResolver(g, iri);
+    fieldConfig.resolve = () => getGraphqlScalarResolver(g, iri);
     fieldConfig.type = nRanges === 1 ? getGraphqlScalarType(g, ranges[0]) : getGraphqlPolymorphicScalarType(g, ranges);
   }
   else if (ranges.some(isLiteral)) {
     return warn(`Mixed literal/non-literal ranges on ${iri}:\n${ranges}`);
   }
   else {
-    fieldConfig.resolve = getGraphqlObjectResolver(g, iri, ranges);
+    fieldConfig.resolve = () => getGraphqlObjectResolver(g, iri, ranges);
     fieldConfig.type = nRanges === 1 ? getGraphqlInterfaceType(g, ranges[0]) : getGraphqlPolymorphicObjectType(g, ranges);
   }
 
